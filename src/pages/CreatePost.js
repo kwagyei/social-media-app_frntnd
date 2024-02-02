@@ -17,7 +17,10 @@ function CreatePost() {
 
   const addPost = async (post) => {
 
-    await axios.post("http://localhost:3001/posts", post).then((response) => {
+    if (post.title.trim() !== '' && post.postText.trim() !== '' && post.userName.trim() !== '') {
+
+
+      await axios.post("http://localhost:3001/posts", post).then((response) => {
 
     console.log("post added to db")
 
@@ -31,6 +34,14 @@ function CreatePost() {
     userName : ""
 
     })
+
+      
+    } else {
+
+      alert("Enter valid inputs")
+    }
+
+    
 
   }
 
