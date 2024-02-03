@@ -22,11 +22,11 @@ function CreatePost() {
 
       await axios.post("http://localhost:3001/posts", post).then((response) => {
 
-    console.log("post added to db")
+        console.log(post)
 
-    navigate('/')
+        navigate('/')
 
-    })
+        })
 
     setPost({
       title : "",

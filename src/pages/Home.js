@@ -28,7 +28,7 @@ function Home() {
     <div>
       { listOfPosts.map( (item,key) => (
 
-      <div className='container mt-3' onClick={ () => { navigate(`/post/${item.id}`)}}>
+      <div className='container mt-3 ' onClick={ () => { navigate(`/post/${item.id}`)}}>
         <div className='post bg-light p-3 rounded'>
             <div className='title mb-2 fw-bold text-start'>{item.title}</div>
             <div className='body'>{item.postText}</div>
