@@ -111,16 +111,14 @@ function Post() {
       <ul className="nav nav-tabs">
         {comments.map((item, key) => (
           <li key={key} className="nav-item">
-            <a className="nav-link" data-toggle="tab" href={`#comment${key}`}>
               {item.commentBody}
-            </a>
           </li>
         ))}
       </ul>
 
-      <div className="tab-content mt-3">
+      <div className=" mt-3">
         {comments.map((item, key) => (
-          <div key={key} id={`comment${key}`} className="tab-pane fade">
+          <div key={key} id={`comment${key}`} className=" fade">
             {item.commentBody}
           </div>
         ))}
