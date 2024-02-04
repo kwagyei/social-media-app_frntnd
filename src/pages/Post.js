@@ -39,11 +39,19 @@ function Post() {
 
     const addComment = async () => {
 
-      await axios.post("http://localhost:3001/comments", newComment).then((response) => {
+      if (newComment.commentBody.trim() !== '') {
+
+        await axios.post("http://localhost:3001/comments", newComment).then((response) => {
 
         })
 
         renderComments()
+
+      } else {
+
+        alert("Enter a comment")
+      }
+
 
     }
 
@@ -108,17 +116,9 @@ function Post() {
   <div className="row mt-3">
     <div className="col-lg-6">
       <h5 className="mb-3">Comments:</h5>
-      <ul className="nav nav-tabs">
+      <div>
         {comments.map((item, key) => (
-          <li key={key} className="nav-item">
-              {item.commentBody}
-          </li>
-        ))}
-      </ul>
-
-      <div className=" mt-3">
-        {comments.map((item, key) => (
-          <div key={key} id={`comment${key}`} className=" fade">
+          <div key={key} className="bg-light p-2 rounded mb-2">
             {item.commentBody}
           </div>
         ))}
