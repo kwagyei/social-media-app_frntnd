@@ -22,7 +22,7 @@ function CreatePost() {
 
             await axios.post("http://localhost:3001/posts", post).then((response) => {
 
-                console.log(post)
+                //console.log(post)
 
                 navigate('/')
 

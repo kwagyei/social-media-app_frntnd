@@ -8,8 +8,6 @@ function Post() {
     let { id } = useParams()
 
 
-
-
     const [newComment,setNewComment] = useState({
       commentBody : "",
       PostId: id
@@ -41,11 +39,14 @@ function Post() {
 
       if (newComment.commentBody.trim() !== '') {
 
-        await axios.post("http://localhost:3001/comments", newComment).then((response) => {
+        await axios.post("http://localhost:3001/comments", newComment, 
+        {headers: {accessToken: sessionStorage.getItem("accessToken")}}).then((response) => {
+
+        if (response.data.error) alert(response.data.error)
 
         })
 
-        renderComments()
+      renderComments()
 
       } else {
 
