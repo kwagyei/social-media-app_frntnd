@@ -32,7 +32,7 @@ function Home() {
         <div className='post bg-light p-3 rounded'>
             <div className='title mb-2 fw-bold text-start'>{item.title}</div>
             <div className='body'>{item.postText}</div>
-            <div className='footer mt-2 text-muted text-end'>{item.userName}</div>
+            <div className='footer mt-2 text-muted text-end'>@{item.userName}</div>
         </div>
       </div>
       

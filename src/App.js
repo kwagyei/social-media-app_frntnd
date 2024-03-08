@@ -15,7 +15,7 @@ function App() {
 
       <BrowserRouter >
         <div className='navbar navbar-light bg-light'>
-          <Link to='/'>Home page</Link><br></br>
+          <Link to='/'>Home page</Link>
           <Link to='/CreatePost'>Create a Post</Link>
           <Link to='/Register'>Register</Link>
           <Link to='/LogIn'>Log In</Link>

@@ -120,7 +120,9 @@ function Post() {
       <div>
         {comments.map((item, key) => (
           <div key={key} className="bg-light p-2 rounded mb-2">
-            {item.commentBody}
+            <div>{item.commentBody}</div>
+            <div className='d-flex justify-content-end'>@{item.username}</div>
+            
           </div>
         ))}
       </div>
