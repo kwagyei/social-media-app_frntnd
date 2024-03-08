@@ -1,10 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from "../helpers/AuthContext"
 
 function LogIn() {
 
     let navigate = useNavigate()
+
+    const {setAuthState} = useContext(AuthContext)
+
 
     const [loginInput, setLoginInput] = useState({
         username: "",
@@ -23,7 +27,9 @@ function LogIn() {
             alert(response.data.error)
         } else {
             //storing the jwt in session storage(not secure)
-            sessionStorage.setItem("accessToken", response.data)
+            localStorage.setItem("accessToken", response.data)
+            
+            setAuthState(true)
 
             navigate("/")
 

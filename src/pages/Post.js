@@ -40,7 +40,7 @@ function Post() {
       if (newComment.commentBody.trim() !== '') {
 
         await axios.post("http://localhost:3001/comments", newComment, 
-        {headers: {accessToken: sessionStorage.getItem("accessToken")}}).then((response) => {
+        {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
 
         if (response.data.error) alert(response.data.error)
 
