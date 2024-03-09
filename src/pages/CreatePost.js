@@ -9,18 +9,17 @@ function CreatePost() {
     const [post, setPost] = useState({
 
         title: "",
-        postText: "",
-        userName: ""
+        postText: ""
     })
 
 
 
     const addPost = async(post) => {
 
-        if (post.title.trim() !== '' && post.postText.trim() !== '' && post.userName.trim() !== '') {
+        if (post.title.trim() !== '' && post.postText.trim() !== '') {
 
 
-            await axios.post("http://localhost:3001/posts", post).then((response) => {
+            await axios.post("http://localhost:3001/posts",post, {headers: {accessToken: localStorage.getItem("accessToken")}}, ).then((response) => {
 
                 //console.log(post)
 
@@ -30,8 +29,7 @@ function CreatePost() {
 
             setPost({
                 title: "",
-                postText: "",
-                userName: ""
+                postText: ""
 
             })
 
@@ -85,17 +83,6 @@ function CreatePost() {
             name="postText"
             rows="4"  // Adjust the number of rows based on your preference
             value={post.postText}
-            onChange={handleInput}
-          />
-        </div>
-
-        <div className="mb-3">
-          <label htmlFor="userName" className="form-label">Username:</label>
-          <input 
-            type="text" 
-            className="form-control"
-            name="userName"
-            value={post.userName}
             onChange={handleInput}
           />
         </div>
