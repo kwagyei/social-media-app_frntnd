@@ -27,9 +27,12 @@ function LogIn() {
             alert(response.data.error)
         } else {
             //storing the jwt in session storage(not secure)
-            localStorage.setItem("accessToken", response.data)
+            localStorage.setItem("accessToken", response.data.token)
             
-            setAuthState(true)
+            setAuthState({
+                username : response.data.username, 
+                id : response.data.id, 
+                status : true })
 
             navigate("/")
 

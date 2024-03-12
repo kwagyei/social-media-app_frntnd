@@ -12,21 +12,36 @@ import { AuthContext} from "./helpers/AuthContext"
 
 function App() {
 
-  const [authState, setAuthState] = useState(false)
+  const [authState, setAuthState] = useState({
+    username : "", 
+    id : 0, 
+    status : false })
 
   useEffect(() => {
 
   axios.get("http://localhost:3001/auth/auth",  {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
       if (response.data.error) {
         
-          setAuthState(false)
+          setAuthState({...authState, status : false})
         } else {
-          setAuthState(true)
+          setAuthState({
+            username : response.data.username, 
+            id : response.data.id, 
+            status : true })
         }
      })
 
   
   }, [])
+
+  const logout = () => {
+    localStorage.removeItem("accessToken")
+
+    setAuthState({
+    username : "", 
+    id : 0, 
+    status : false })
+  }
 
   
   return (
@@ -37,13 +52,16 @@ function App() {
         <div className='navbar navbar-light bg-light'>
           <Link to='/'>Home page</Link>
           <Link to='/CreatePost'>Create a Post</Link>
+          <h1>{authState.username}</h1>
 
           {/* display only when there is no accessToken */}
-          { !authState && (
+          { !authState.status ? (
             <>
              <Link to='/Register'>Register</Link>
              <Link to='/LogIn'>Log In</Link>
             </>
+          ) : (
+            <button onClick={logout}>Logout</button>
           )}
           
         </div>
