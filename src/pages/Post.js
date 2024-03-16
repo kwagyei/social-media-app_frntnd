@@ -42,11 +42,17 @@ function Post() {
         await axios.post("http://localhost:3001/comments", newComment, 
         {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
 
-        if (response.data.error) alert(response.data.error)
+        if (response.data.error) {
+          alert(response.data.error)
+        }else {
+          const commentToAdd = {
+            commentBody: newComment.commentBody,
+            username: response.data.username,
+          }
+          setComments([...comments, commentToAdd])
+        }
 
         })
-
-      renderComments()
 
       } else {
 
