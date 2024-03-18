@@ -14,8 +14,13 @@ function Register() {
 
             await axios.post("http://localhost:3001/auth", newUserInput).then((response) => {
 
-            alert(response.data)
+            if (response.data.error) {
+                
+            alert(response.data.error)
+        }else{
 
+            alert(response.data)
+        }
             })
 
             setNewUserInput({

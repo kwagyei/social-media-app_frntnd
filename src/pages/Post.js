@@ -1,11 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import axios from 'axios'
+import { AuthContext } from "../helpers/AuthContext"
 
 function Post() {
 
     let { id } = useParams()
+
+    const {authState} = useContext(AuthContext)
 
 
     const [newComment,setNewComment] = useState({
@@ -27,9 +30,9 @@ function Post() {
 
     }, [])
 
-    const renderComments = () => {
+    const renderComments = async () => {
 
-      axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+      await axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
             setComments(response.data)
           })
 
@@ -46,6 +49,7 @@ function Post() {
           alert(response.data.error)
         }else {
           const commentToAdd = {
+            id: response.data.id,
             commentBody: newComment.commentBody,
             username: response.data.username,
           }
@@ -83,6 +87,19 @@ function Post() {
 
         }
       )
+
+    }
+
+    const deleteComment = async(id, key) => {
+
+      await axios.delete(`http://localhost:3001/comments/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) =>{
+        
+      setComments(comments.filter((val) => {
+          return val.id !== id
+        }))
+            //console.log(response.data)
+          })
+
 
     }
 
@@ -127,7 +144,7 @@ function Post() {
         {comments.map((item, key) => (
           <div key={key} className="bg-light p-2 rounded mb-2">
             <div>{item.commentBody}</div>
-            <div className='d-flex justify-content-end'>@{item.username}</div>
+            <div className='d-flex justify-content-end'><label>@{item.username}</label>{authState.username === item.username &&<button onClick={ () => {deleteComment(item.id, key) }}>x</button>}</div>
             
           </div>
         ))}
