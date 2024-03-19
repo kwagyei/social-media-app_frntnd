@@ -15,10 +15,44 @@ function Home() {
   useEffect( () => {
 
     axios.get("http://localhost:3001/posts").then((response) => {
-      setListOfPosts(response.data)
+
+    setListOfPosts(response.data.reverse()) //to display in reverse chronological order
+      
     })
 
   }, [] )
+
+  const likePost = (postId) => {
+
+    axios.post("http://localhost:3001/likes",
+    {postId : postId},{headers : {accessToken : localStorage.getItem("accessToken")}}).then((response) => {
+
+    if (response.data.error) {
+      alert(response.data.error)
+    }else {
+
+    // console.log(response.data)
+    // console.log(postId)
+
+    setListOfPosts(listOfPosts.map((post) => {
+      if (post.id === postId) {
+        if (response.data.liked) {
+          return {...post, Likes: [...post.Likes, 0]}
+        } else {
+          const likesArray = post.Likes
+          likesArray.pop()
+          return {...post, Likes: likesArray}
+        }
+
+      }else {
+        return post
+      }
+    }))
+
+    }
+    })
+
+  }
 
 
 
@@ -28,11 +62,12 @@ function Home() {
     <div>
       { listOfPosts.map( (item,key) => (
 
-      <div className='container mt-3 ' onClick={ () => { navigate(`/post/${item.id}`)}}>
+      <div className='container mt-3 ' >
         <div className='post bg-light p-3 rounded'>
             <div className='title mb-2 fw-bold text-start'>{item.title}</div>
-            <div className='body'>{item.postText}</div>
+            <div className='body' onClick={ () => { navigate(`/post/${item.id}`)}}>{item.postText}</div>
             <div className='footer mt-2 text-muted text-end'>@{item.userName}</div>
+            <button className="btn btn-primary text-end me-2" onClick={() => likePost(item.id)}>Like</button><label>{item.Likes.length}</label>
         </div>
       </div>
       

@@ -19,11 +19,15 @@ function CreatePost() {
         if (post.title.trim() !== '' && post.postText.trim() !== '') {
 
 
-            await axios.post("http://localhost:3001/posts",post, {headers: {accessToken: localStorage.getItem("accessToken")}}, ).then((response) => {
+            await axios.post("http://localhost:3001/posts",post, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
 
-                //console.log(post)
+              if (response.data.error) {
+                alert(response.data.error)
+              }else {
 
+                alert("Post created")
                 navigate('/')
+              }
 
             })
 
