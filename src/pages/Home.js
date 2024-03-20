@@ -1,25 +1,33 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import axios from "axios";
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../helpers/AuthContext';
 
 
 
 //importing the array from the db
 function Home() {
+  const [listOfPosts,setListOfPosts] = useState([])
+
+  const { authState } = useContext(AuthContext)
 
   const navigate = useNavigate()
 
-  const [listOfPosts,setListOfPosts] = useState([])
-
   useEffect( () => {
 
-    axios.get("http://localhost:3001/posts").then((response) => {
+      axios.get("http://localhost:3001/posts", {headers : {accessToken : localStorage.getItem("accessToken")}}).then((response) => {
 
-    setListOfPosts(response.data.reverse()) //to display in reverse chronological order
-      
-    })
+      if (response.data.error) {
 
+             navigate("/login")
+             
+      }else {
+        setListOfPosts(response.data.listofPosts.reverse()) //to display in reverse chronological order
+      }
+
+      })
+    
   }, [] )
 
   const likePost = (postId) => {
@@ -54,6 +62,18 @@ function Home() {
 
   }
 
+  const deletePost = async(id, key) => {
+
+await axios.delete(`http://localhost:3001/posts/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) =>{
+  
+setListOfPosts(listOfPosts.filter((val) => {
+    return val.id !== id
+  }))
+      //console.log(response.data)
+    })
+
+
+}
 
 
   return (
@@ -68,7 +88,13 @@ function Home() {
             <div className='body' onClick={ () => { navigate(`/post/${item.id}`)}}>{item.postText}</div>
             <div className='footer mt-2 text-muted text-end'>@{item.userName}</div>
             <button className="btn btn-primary text-end me-2" onClick={() => likePost(item.id)}>Like</button><label>{item.Likes.length}</label>
+            <div className='d-flex justify-content-end'>
+            {authState.username === item.userName && <button onClick={() => deletePost(item.id)}>X</button>}
+            </div>
+           
+            
         </div>
+        
       </div>
       
       ))}

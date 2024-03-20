@@ -5,6 +5,7 @@ import Post from './pages/Post';
 import CreatePost from './pages/CreatePost';
 import LogIn from './pages/LogIn';
 import Register from './pages/Register';
+import PageNotFound from './pages/PageNotFound';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AuthContext} from "./helpers/AuthContext"
@@ -14,7 +15,7 @@ function App() {
 
   const [authState, setAuthState] = useState({
     username : "", 
-    id : 0, 
+    id : 0,
     status : false })
 
   useEffect(() => {
@@ -50,9 +51,6 @@ function App() {
 
       <BrowserRouter >
         <div className='navbar navbar-light bg-light'>
-          <Link to='/'>Home page</Link>
-          <Link to='/CreatePost'>Create a Post</Link>
-          <h1>{authState.username}</h1>
 
           {/* display only when there is no accessToken */}
           { !authState.status ? (
@@ -61,8 +59,14 @@ function App() {
              <Link to='/LogIn'>Log In</Link>
             </>
           ) : (
-            <button onClick={logout}>Logout</button>
+            <>
+            <Link to='/'>Home page</Link>
+            <Link to='/CreatePost'>Create a Post</Link>
+            </>
           )}
+
+          <h1>{authState.username}</h1>
+          {authState.status && <button onClick={logout}>Logout</button>}
           
         </div>
       
@@ -72,6 +76,7 @@ function App() {
             <Route path= '/Post/:id' element={<Post></Post>} ></Route>
             <Route path= '/Register' element={<Register></Register>} ></Route>
             <Route path= '/LogIn' element={<LogIn></LogIn>} ></Route>
+            <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
             
         </Routes>
       </BrowserRouter>

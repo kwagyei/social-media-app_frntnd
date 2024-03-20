@@ -1,6 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useContext, useEffect} from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { AuthContext } from '../helpers/AuthContext';
 
 function CreatePost() {
 
@@ -11,6 +12,16 @@ function CreatePost() {
         title: "",
         postText: ""
     })
+
+
+    const { authState } = useContext(AuthContext)
+  
+    useEffect( () => {
+  
+      if (!localStorage.getItem("accessToken")) {
+        navigate("/login")
+      } 
+    }, [] )
 
 
 

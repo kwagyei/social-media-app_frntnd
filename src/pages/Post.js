@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { AuthContext } from "../helpers/AuthContext"
+import { useNavigate } from 'react-router-dom';
 
 function Post() {
 
     let { id } = useParams()
+    const navigate = useNavigate()
 
     const {authState} = useContext(AuthContext)
 
@@ -20,13 +22,21 @@ function Post() {
     const [clickedPost,setClickedPost] = useState({})
     const [comments,setComments] = useState([])
 
+    
+
     useEffect( () => {
 
+      if (!localStorage.getItem("accessToken")) {
+        navigate("/login")
+      } else {
         axios.get(`http://localhost:3001/posts/${id}`).then((response) => {
-            setClickedPost(response.data)
-          })
+          setClickedPost(response.data)
+        })
 
-          renderComments()
+        renderComments()
+      }
+
+       
 
     }, [])
 
@@ -145,7 +155,6 @@ function Post() {
           <div key={key} className="bg-light p-2 rounded mb-2">
             <div>{item.commentBody}</div>
             <div className='d-flex justify-content-end'><label>@{item.username}</label>{authState.username === item.username &&<button onClick={ () => {deleteComment(item.id, key) }}>x</button>}</div>
-            
           </div>
         ))}
       </div>
