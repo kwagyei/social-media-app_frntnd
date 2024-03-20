@@ -29,7 +29,7 @@ function Post() {
       if (!localStorage.getItem("accessToken")) {
         navigate("/login")
       } else {
-        axios.get(`http://localhost:3001/posts/${id}`).then((response) => {
+        axios.get(`https://social-media-posting-app-af137f0e8a2c.herokuapp.com/posts/${id}`).then((response) => {
           setClickedPost(response.data)
         })
 
@@ -42,7 +42,7 @@ function Post() {
 
     const renderComments = async () => {
 
-      await axios.get(`http://localhost:3001/comments/${id}`).then((response) => {
+      await axios.get(`https://social-media-posting-app-af137f0e8a2c.herokuapp.com/comments/${id}`).then((response) => {
             setComments(response.data)
           })
 
@@ -52,7 +52,7 @@ function Post() {
 
       if (newComment.commentBody.trim() !== '') {
 
-        await axios.post("http://localhost:3001/comments", newComment, 
+        await axios.post("https://social-media-posting-app-af137f0e8a2c.herokuapp.com/comments", newComment, 
         {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
 
         if (response.data.error) {
@@ -102,7 +102,7 @@ function Post() {
 
     const deleteComment = async(id, key) => {
 
-      await axios.delete(`http://localhost:3001/comments/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) =>{
+      await axios.delete(`https://social-media-posting-app-af137f0e8a2c.herokuapp.com/comments/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) =>{
         
       setComments(comments.filter((val) => {
           return val.id !== id

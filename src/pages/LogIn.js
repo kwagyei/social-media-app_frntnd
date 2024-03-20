@@ -20,7 +20,7 @@ function LogIn() {
 
         if (loginInput.username.trim() !== '' && loginInput.password.trim() !== '' ){
 
-        await axios.post("http://localhost:3001/auth/login", loginInput).then((response) => {
+        await axios.post("https://social-media-posting-app-af137f0e8a2c.herokuapp.com/auth/login", loginInput).then((response) => {
 
         //checking if there was an error during login
         if (response.data.error) {

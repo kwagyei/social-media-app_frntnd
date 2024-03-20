@@ -30,7 +30,7 @@ function CreatePost() {
         if (post.title.trim() !== '' && post.postText.trim() !== '') {
 
 
-            await axios.post("http://localhost:3001/posts",post, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
+            await axios.post("https://social-media-posting-app-af137f0e8a2c.herokuapp.com/posts",post, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
 
               if (response.data.error) {
                 alert(response.data.error)

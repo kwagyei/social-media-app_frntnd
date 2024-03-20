@@ -20,7 +20,7 @@ function App() {
 
   useEffect(() => {
 
-  axios.get("http://localhost:3001/auth/auth",  {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
+  axios.get("https://social-media-posting-app-af137f0e8a2c.herokuapp.com/auth/auth",  {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) => {
       if (response.data.error) {
         
           setAuthState({...authState, status : false})

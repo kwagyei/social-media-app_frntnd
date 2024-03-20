@@ -12,7 +12,7 @@ function Register() {
 
          if (newUserInput.username.trim() !== '' && newUserInput.password.trim() !== '' ){
 
-            await axios.post("http://localhost:3001/auth", newUserInput).then((response) => {
+            await axios.post("https://social-media-posting-app-af137f0e8a2c.herokuapp.com/auth", newUserInput).then((response) => {
 
             if (response.data.error) {
                 

@@ -16,7 +16,7 @@ function Home() {
 
   useEffect( () => {
 
-      axios.get("http://localhost:3001/posts", {headers : {accessToken : localStorage.getItem("accessToken")}}).then((response) => {
+      axios.get("https://social-media-posting-app-af137f0e8a2c.herokuapp.com/posts", {headers : {accessToken : localStorage.getItem("accessToken")}}).then((response) => {
 
       if (response.data.error) {
 
@@ -32,7 +32,7 @@ function Home() {
 
   const likePost = (postId) => {
 
-    axios.post("http://localhost:3001/likes",
+    axios.post("https://social-media-posting-app-af137f0e8a2c.herokuapp.com/likes",
     {postId : postId},{headers : {accessToken : localStorage.getItem("accessToken")}}).then((response) => {
 
     if (response.data.error) {
@@ -64,7 +64,7 @@ function Home() {
 
   const deletePost = async(id, key) => {
 
-await axios.delete(`http://localhost:3001/posts/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) =>{
+await axios.delete(`https://social-media-posting-app-af137f0e8a2c.herokuapp.com/posts/${id}`, {headers: {accessToken: localStorage.getItem("accessToken")}}).then((response) =>{
   
 setListOfPosts(listOfPosts.filter((val) => {
     return val.id !== id
