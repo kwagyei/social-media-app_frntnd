@@ -86,7 +86,7 @@ setListOfPosts(listOfPosts.filter((val) => {
             <div className="card-body">
               <h5 className="card-title">{item.title}</h5>
               <p className="card-text" onClick={() => navigate(`/post/${item.id}`)}>{item.postText}</p>
-              <div className="card-footer text-muted">@{item.userName}</div>
+              <div className="text-start text-muted">@{item.userName}</div>
               <button className="btn btn-primary me-2" onClick={() => likePost(item.id)}>Like <span className="badge bg-secondary">{item.Likes.length}</span></button>
               {authState.username === item.userName && <button className="btn btn-danger" onClick={() => deletePost(item.id)}>Delete</button>}
             </div>

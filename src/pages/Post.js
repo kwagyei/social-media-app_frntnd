@@ -122,7 +122,7 @@ function Post() {
           <div className="card-body">
             <h4 className="card-title">{clickedPost.title}</h4>
             <p className="card-text">{clickedPost.postText}</p>
-            <small className="text-muted">@{clickedPost.userName}</small>
+            <div className="text-start text-muted"><small>@{clickedPost.userName}</small></div>
           </div>
         </div>
       </div>
@@ -157,7 +157,7 @@ function Post() {
             <div key={key} className="card mb-2">
               <div className="card-body">
                 <div>{item.commentBody}</div>
-                <div className="text-muted">@{item.username}</div>
+                <div className="text-end text-muted"><small>@{item.username}</small></div>
                 {authState.username === item.username && <button onClick={() => deleteComment(item.id, key)} className="btn btn-danger">Delete</button>}
               </div>
             </div>
