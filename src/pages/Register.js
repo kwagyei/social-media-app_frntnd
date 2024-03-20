@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function Register() {
+
+    let navigate = useNavigate()
 
     const [newUserInput, setNewUserInput] = useState({
         username: "",
@@ -20,6 +23,8 @@ function Register() {
         }else{
 
             alert(response.data)
+            navigate("/login")
+            
         }
             })
 
