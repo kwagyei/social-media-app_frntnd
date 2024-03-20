@@ -46,43 +46,55 @@ function App() {
 
   
   return (
-    <div className='App container'>
-    <AuthContext.Provider value ={{ authState, setAuthState }}>
+    <div className='App'>
+      <AuthContext.Provider value={{ authState, setAuthState }}>
+        <BrowserRouter>
+          <nav className='navbar navbar-expand-lg navbar-light bg-light'>
+            <div className='container'>
+              <Link className='navbar-brand' to='/'>{authState.status ? 'Home page' : 'My App'}</Link>
+              <div className='sjustify-content-end'>{authState.status===true && <p>@{authState.username}</p>}</div>
+              <button className='navbar-toggler' type='button' data-bs-toggle='collapse' data-bs-target='#navbarNav' aria-controls='navbarNav' aria-expanded='false' aria-label='Toggle navigation'>
+                <span className='navbar-toggler-icon'></span>
+              </button>
+              <div className='collapse navbar-collapse' id='navbarNav'>
+                <ul className='navbar-nav ms-auto'>
+                  {!authState.status ? (
+                    <>
+                      <li className='nav-item'>
+                        <Link className='nav-link' to='/Register'>Register</Link>
+                      </li>
+                      <li className='nav-item'>
+                        <Link className='nav-link' to='/LogIn'>Log In</Link>
+                      </li>
+                    </>
+                  ) : (
+                    <>
+                      <li className='nav-item'>
+                        <Link className='nav-link' to='/CreatePost'>Create a Post</Link>
+                      </li>
+                      <li className='nav-item'>
+                        <button className='btn btn-link nav-link' onClick={logout}>Logout</button>
+                      </li>
+                    </>
+                  )}
+                </ul>
+              </div>
+            </div>
+          </nav>
 
-      <BrowserRouter >
-        <div className='navbar navbar-light bg-light'>
+          <div className='container mt-4'>
+            <Routes>
+              <Route path='/' element={<Home />} />
+              <Route path='/CreatePost' element={<CreatePost />} />
+              <Route path='/Post/:id' element={<Post />} />
+              <Route path='/Register' element={<Register />} />
+              <Route path='/LogIn' element={<LogIn />} />
+              <Route path='*' element={<PageNotFound />} />
+            </Routes>
+          </div>
 
-          {/* display only when there is no accessToken */}
-          { !authState.status ? (
-            <>
-             <Link to='/Register'>Register</Link>
-             <Link to='/LogIn'>Log In</Link>
-            </>
-          ) : (
-            <>
-            <Link to='/'>Home page</Link>
-            <Link to='/CreatePost'>Create a Post</Link>
-            </>
-          )}
-
-          <h1>{authState.username}</h1>
-          {authState.status && <button onClick={logout}>Logout</button>}
-          
-        </div>
-      
-        <Routes>
-            <Route path= '/' element={<Home></Home>} ></Route>
-            <Route path= '/CreatePost' element={<CreatePost></CreatePost>} ></Route>
-            <Route path= '/Post/:id' element={<Post></Post>} ></Route>
-            <Route path= '/Register' element={<Register></Register>} ></Route>
-            <Route path= '/LogIn' element={<LogIn></LogIn>} ></Route>
-            <Route path="*" element={<PageNotFound></PageNotFound>}></Route>
-            
-        </Routes>
-      </BrowserRouter>
-
-    </AuthContext.Provider>
-
+        </BrowserRouter>
+      </AuthContext.Provider>
     </div>
   );
 }

@@ -116,51 +116,56 @@ function Post() {
 
   return (
     <div className="container">
-  <div className="row">
-    <div className="col-lg-6">
-      <div className="postBody bg-light p-3 rounded">
-        <h4>{clickedPost.title}</h4>
-        <p>{clickedPost.postText}</p>
-        <small className="text-muted">@{clickedPost.userName}</small>
+    <div className="row">
+      <div className="col-lg-8">
+        <div className="card mb-3">
+          <div className="card-body">
+            <h4 className="card-title">{clickedPost.title}</h4>
+            <p className="card-text">{clickedPost.postText}</p>
+            <small className="text-muted">@{clickedPost.userName}</small>
+          </div>
+        </div>
+      </div>
+      <div className="col-lg-4">
+        <div className="card mb-3">
+          <div className="card-body">
+            <form onSubmit={handleSubmit}>
+              <div className="mb-3">
+                <label className="form-label">Your Comment:</label>
+                <input
+                  type="text"
+                  name="commentBody"
+                  className="form-control"
+                  placeholder="Comment here..."
+                  onChange={handleInput}
+                  value={newComment.commentBody}
+                />
+              </div>
+              <div>
+                <button type="submit" className="btn btn-primary">COMMENT</button>
+              </div>
+            </form>
+          </div>
+        </div>
       </div>
     </div>
-
-    <div className="col-lg-6">
-      <div className="commentForm bg-light p-3 rounded">
-        <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label className="form-label">Your Comment:</label>
-            <input
-              type="text"
-              name="commentBody"
-              className="form-control"
-              placeholder="Comment here..."
-              onChange={handleInput}
-              value={newComment.commentBody}
-            />
-          </div>
-          <div>
-            <button type="submit" className="btn btn-primary">COMMENT</button>
-          </div>
-        </form>
+    <div className="row mt-3">
+      <div className="col-lg-8">
+        <h5 className="mb-3">Comments:</h5>
+        <div>
+          {comments.map((item, key) => (
+            <div key={key} className="card mb-2">
+              <div className="card-body">
+                <div>{item.commentBody}</div>
+                <div className="text-muted">@{item.username}</div>
+                {authState.username === item.username && <button onClick={() => deleteComment(item.id, key)} className="btn btn-danger">Delete</button>}
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   </div>
-
-  <div className="row mt-3">
-    <div className="col-lg-6">
-      <h5 className="mb-3">Comments:</h5>
-      <div>
-        {comments.map((item, key) => (
-          <div key={key} className="bg-light p-2 rounded mb-2">
-            <div>{item.commentBody}</div>
-            <div className='d-flex justify-content-end'><label>@{item.username}</label>{authState.username === item.username &&<button onClick={ () => {deleteComment(item.id, key) }}>x</button>}</div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</div>
   )
 }
 

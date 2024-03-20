@@ -80,23 +80,18 @@ setListOfPosts(listOfPosts.filter((val) => {
 
 
     <div>
-      { listOfPosts.map( (item,key) => (
-
-      <div className='container mt-3 ' >
-        <div className='post bg-light p-3 rounded'>
-            <div className='title mb-2 fw-bold text-start'>{item.title}</div>
-            <div className='body' onClick={ () => { navigate(`/post/${item.id}`)}}>{item.postText}</div>
-            <div className='footer mt-2 text-muted text-end'>@{item.userName}</div>
-            <button className="btn btn-primary text-end me-2" onClick={() => likePost(item.id)}>Like</button><label>{item.Likes.length}</label>
-            <div className='d-flex justify-content-end'>
-            {authState.username === item.userName && <button onClick={() => deletePost(item.id)}>X</button>}
+      {listOfPosts.map((item, key) => (
+        <div className="container mt-3" key={key}>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">{item.title}</h5>
+              <p className="card-text" onClick={() => navigate(`/post/${item.id}`)}>{item.postText}</p>
+              <div className="card-footer text-muted">@{item.userName}</div>
+              <button className="btn btn-primary me-2" onClick={() => likePost(item.id)}>Like <span className="badge bg-secondary">{item.Likes.length}</span></button>
+              {authState.username === item.userName && <button className="btn btn-danger" onClick={() => deletePost(item.id)}>Delete</button>}
             </div>
-           
-            
+          </div>
         </div>
-        
-      </div>
-      
       ))}
     </div>
   )
