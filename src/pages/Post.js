@@ -43,7 +43,7 @@ function Post() {
     const renderComments = async () => {
 
       await axios.get(`https://social-media-posting-app-af137f0e8a2c.herokuapp.com/comments/${id}`).then((response) => {
-            setComments(response.data)
+            setComments(response.data.reverse())
           })
 
     }
@@ -63,7 +63,7 @@ function Post() {
             commentBody: newComment.commentBody,
             username: response.data.username,
           }
-          setComments([...comments, commentToAdd])
+          setComments([commentToAdd, ...comments]) //the will add the new comment to the beginning ogf the array
         }
 
         })
