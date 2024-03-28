@@ -11,7 +11,11 @@ import axios from 'axios';
 import { AuthContext} from "./helpers/AuthContext"
 
 
+
+
 function App() {
+
+  
 
   const [authState, setAuthState] = useState({
     username : "", 
@@ -42,6 +46,8 @@ function App() {
     username : "", 
     id : 0, 
     status : false })
+    window.location.reload() //this is to force the page to reload
+
   }
 
   
